@@ -1,0 +1,14 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#252525</item>
+        <item name="colorPrimaryDark">#AF0404</item>
+        <item name="colorAccent">#FF0000</item>
+
+    </style>
+    <style name="LoadingTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="colorPrimary">#252525</item>
+    </style>
+</resources>

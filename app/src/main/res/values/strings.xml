@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">GiGS Music</string>
+    <string name="image_description">Album Art👨🏻‍💻</string>
+    <string name="default_title">Title</string>
+    <string name="default_artist">Artist</string>
+    <string name="current_music_number">0/0</string>
+    <string name="default_duration">00:00</string>
+    <string name="mp3_mime_type">audio/mpeg</string>
+    <string name="playing_text">playing</string>
+    <string name="paused_text">paused</string>
+    <string name="favorite_false">FavoriteFalse</string>
+    <string name="favorite_true">FavoriteTrue</string>
+    <string name="default_color">#252525</string>
+    <string name="repeat_inactive">RepeatOff</string>
+    <string name="repeat_active">RepeatOn</string>
+    <string name="repeat_once">RepeatOnce</string>
+    <string name="shuffle_inactive">ShuffleOff</string>
+    <string name="shuffle_active">ShuffleOn</string>
+    <string name="default_playlist_name">default.json</string>
+    <string name="favorite_playlist_name">favorites</string>
+    <string name="loading_text">Loading…(It may take a while on first start)</string>
+    <string name="loading_image_description">Loading Playlist…</string>
+    <string name="ripple_animation_image_description">Ripple Image</string>
+</resources>
