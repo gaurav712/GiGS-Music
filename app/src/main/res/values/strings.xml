@@ -21,5 +21,4 @@
     <string name="loading_text">Loading…(It may take a while on first start)</string>
     <string name="loading_image_description">Loading Playlist…</string>
     <string name="ripple_animation_image_description">Ripple Image</string>
-    <string name="unknown_string">Unknown</string>
 </resources>

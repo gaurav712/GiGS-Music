@@ -15,6 +15,7 @@ import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.palette.graphics.Palette
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONArray
@@ -137,7 +138,9 @@ class MainActivity : AppCompatActivity() {
         // updates music's album art and colors for status bar and window background
         // as it's independent of the playback so better start it on a different thread
         Thread {
-            currentMusicAlbumArt = MediaInfo().createCircularBitmap(this, currentMusicUri)
+            currentMusicAlbumArt = MediaInfo().createCircularBitmap(this,
+                currentMusicUri
+            )
             updateColors()  // updates the status bar and window background
             loadAlbumArt()  // load the current album art into the image view
         }.start()
