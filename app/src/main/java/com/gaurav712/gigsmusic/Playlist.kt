@@ -76,7 +76,18 @@ class Playlist {
     }
 
     fun removeFromPlaylist(context: Context, mediaUri: String, playlistName: String) {
-        val stream = File(context.filesDir, playlistName)
+
+        val inputStream = File(context.filesDir, playlistName)
+        val outputStream = File(context.filesDir, TEMP_PLAYLIST_FILE_NAME)
+
+        inputStream.forEachLine {
+            if (it != mediaUri) {
+                outputStream.appendText("$it\n")
+            }
+        }
+
+        inputStream.delete()
+        outputStream.renameTo(File(context.filesDir, playlistName))
     }
 
     companion object {
@@ -85,5 +96,8 @@ class Playlist {
         const val artistIndex = 1
         const val durationIndex = 2
         const val mediaUriIndex = 3
+
+        // temporary playlist file name
+        const val TEMP_PLAYLIST_FILE_NAME = ".temp.playlist"
     }
 }

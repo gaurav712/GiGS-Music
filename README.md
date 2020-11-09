@@ -12,7 +12,6 @@ To be added:
 * Add to Playlist feature
 * The Playlist View
 * Preferences View
-* Remove from favorites
 * An Equalizer (maybe)
 * Visualisation (TBD)
 * Navigation gestures

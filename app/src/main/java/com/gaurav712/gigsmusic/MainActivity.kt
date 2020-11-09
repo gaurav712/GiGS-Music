@@ -326,35 +326,46 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun toggleFavorite(toggleFavoriteButton: View) {
+
+        if (toggleFavoriteButton.tag == getString(R.string.favorite_false)) {
+            Playlist().addToPlaylist(
+                this, currentMusicUri.toString(),
+                getString(R.string.favorite_playlist_name)
+            )
+        } else {
+            Playlist().removeFromPlaylist(
+                this, currentMusicUri.toString(),
+                getString(R.string.favorite_playlist_name)
+            )
+        }
+
+        animateFavoriteToggle()
+    }
+
+    private fun animateFavoriteToggle() {
         val animation = AnimationUtils.loadAnimation(this, R.anim.bounce)
         animation.interpolator = bounceAnimationInterpolator
 
-        if (toggleFavoriteButton.tag == getString(R.string.favorite_false)) {
-            toggleFavoriteButton.setBackgroundResource(R.drawable.favorite_true)
-            toggleFavoriteButton.tag = getString(R.string.favorite_true)
-            if (!FAVORITE) {
-                Playlist().addToPlaylist(
-                    this, currentMusicUri.toString(),
-                    getString(R.string.favorite_playlist_name))
-            }
+        if (addFavButton.tag == getString(R.string.favorite_false)) {
+            addFavButton.setBackgroundResource(R.drawable.favorite_true)
+            addFavButton.tag = getString(R.string.favorite_true)
         } else {
-            toggleFavoriteButton.setBackgroundResource(R.drawable.favorite_false)
-            toggleFavoriteButton.tag = getString(R.string.favorite_false)
+            addFavButton.setBackgroundResource(R.drawable.favorite_false)
+            addFavButton.tag = getString(R.string.favorite_false)
         }
 
-        toggleFavoriteButton.startAnimation(animation)
+        addFavButton.startAnimation(animation)
     }
 
     private fun updateFavoriteToggle() {
+
         if (Playlist().isInPlaylist(this, currentMusicUri.toString(),
                 getString(R.string.favorite_playlist_name))) {
-            FAVORITE = true
-            toggleFavorite(addFavButton)
+            animateFavoriteToggle()
         } else {
             if (addFavButton.tag == getString(R.string.favorite_true)) {
                 // current music is not in favorites and the button is enabled
-                FAVORITE = false
-                toggleFavorite(addFavButton)
+                animateFavoriteToggle()
             }
         }
     }
@@ -415,7 +426,7 @@ class MainActivity : AppCompatActivity() {
         // shuffle and repeat
         private var SHUFFLE = false
         private var REPEAT = false
-        private var FAVORITE = false
+        private var MODIFY_FAVORITE = true
 
         const val titleIndex = 0
         const val artistIndex = 1
