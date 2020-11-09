@@ -8,11 +8,10 @@
 
     <ImageView
         android:id="@+id/rippleAnimationImage"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
         app:srcCompat="@drawable/ring"
         android:layout_marginTop="150dp"
-        android:elevation="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

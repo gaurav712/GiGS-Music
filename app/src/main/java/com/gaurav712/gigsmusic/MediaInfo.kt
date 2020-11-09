@@ -13,7 +13,7 @@ class MediaInfo {
 
         mediaMetadata = MediaMetadataRetriever()
         mediaMetadata.setDataSource(context, mediaPath)
-
+        
         val title = mediaMetadata.extractMetadata(
             MediaMetadataRetriever.METADATA_KEY_TITLE)!!  // title
         val artist = mediaMetadata.extractMetadata(

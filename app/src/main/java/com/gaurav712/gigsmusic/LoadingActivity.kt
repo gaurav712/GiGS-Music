@@ -9,6 +9,7 @@ import android.os.Looper
 import android.util.Log
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.documentfile.provider.DocumentFile
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -71,8 +72,15 @@ class LoadingActivity : AppCompatActivity() {
                 generateDefaultPlaylist(documentFile)
             }
 
-            MainActivity.defaultPlaylist = Playlist().getDefaultPlaylist(applicationContext,
-                getString(R.string.default_playlist_name))
+            if (File(filesDir, getString(R.string.default_playlist_name)).exists()) {
+                MainActivity.defaultPlaylist = Playlist().getDefaultPlaylist(
+                    applicationContext,
+                    getString(R.string.default_playlist_name)
+                )
+            } else {
+                // Notify MainActivity about unavailability of defaultPlaylist
+                MainActivity.DEFAULT_PLAYLIST_AVAILABLE = false
+            }
 
             withContext(Main) {
                 startMainActivity()
@@ -89,7 +97,7 @@ class LoadingActivity : AppCompatActivity() {
         startActivity(intentToLaunchMainActivity)
     }
 
-    private fun generateDefaultPlaylist(documentFile: DocumentFile) {
+    private suspend fun generateDefaultPlaylist(documentFile: DocumentFile) {
 
         var defaultPlaylist = arrayOf<ArrayList<String>>()
 //        var defaultPlaylistIsInitialized = false
@@ -123,25 +131,32 @@ class LoadingActivity : AppCompatActivity() {
             } else {
                 continue
             }
-
         }
-        mediaInfo.release()
-//        while (true) {
-//
-//            sleep(50)   // wait for defaultPlaylist to be initialised
-//
-//            if (defaultPlaylistIsInitialized) {
+
         // Generate the default playlist
         if (defaultPlaylist.isEmpty()) {
-            Log.e("directory contents" ,
-                "No *.mp3 found in the selected directory!")
-            destroyActivity()   // selected folder was invalid, exiting
+            withContext(Main) {
+                Toast.makeText(applicationContext,
+                    "No *.mp3 found in the selected directory!",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
         } else {
+
+            mediaInfo.release()
+
             Playlist().generateDefaultPlaylist(
                 this,
                 getString(R.string.default_playlist_name), defaultPlaylist
             )
         }
+
+//        while (true) {
+//
+//            sleep(50)   // wait for defaultPlaylist to be initialised
+//
+//            if (defaultPlaylistIsInitialized) {
+
 //            }
 //        }
     }

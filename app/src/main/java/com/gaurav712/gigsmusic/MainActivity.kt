@@ -53,7 +53,9 @@ class MainActivity : AppCompatActivity() {
         maxSeekBarProgress = findViewById(R.id.maxSeekBarProgress)
         currentMusicNumberTextView = findViewById(R.id.currentMusicNumberTextView)
 
-        loadPlayer()
+        if (DEFAULT_PLAYLIST_AVAILABLE) {
+            loadPlayer()
+        }
     }
 
     override fun onStop() {
@@ -426,7 +428,7 @@ class MainActivity : AppCompatActivity() {
         // shuffle and repeat
         private var SHUFFLE = false
         private var REPEAT = false
-        private var MODIFY_FAVORITE = true
+        var DEFAULT_PLAYLIST_AVAILABLE = true
 
         const val titleIndex = 0
         const val artistIndex = 1
