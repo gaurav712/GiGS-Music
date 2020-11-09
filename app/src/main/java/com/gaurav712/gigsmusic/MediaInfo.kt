@@ -94,7 +94,7 @@ class MediaInfo {
     }
 
     companion object {
-        private const val DEFAULT_TITLE = "Unknown"
+        lateinit var DEFAULT_TITLE: String
         private const val DEFAULT_ARTIST = "Unknown"
     }
 }

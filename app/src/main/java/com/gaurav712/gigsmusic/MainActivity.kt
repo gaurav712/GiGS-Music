@@ -1,11 +1,10 @@
 package com.gaurav712.gigsmusic
 
-import android.app.PendingIntent
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Color.parseColor
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -14,8 +13,8 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.palette.graphics.Palette
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONArray
@@ -148,10 +147,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadMusicMetadata() {
         musicArtistTextBox.text = currentMusicArtist
+        musicArtistTextBox.requestFocus()   // for moving text
+
         musicTitleTextBox.text = currentMusicTitle
+        musicTitleTextBox.requestFocus()    // for moving text
+
         currentSeekBarProgress.text = getString(R.string.default_duration)
+
         durationSeekBar.progress = 0    // set initial position just to be sure
         durationSeekBar.max = currentMusicDuration
+
         maxSeekBarProgress.text = calculateDuration(currentMusicDuration)
     }
 
@@ -275,7 +280,6 @@ class MainActivity : AppCompatActivity() {
 
             updateCurrentMusicIndex(jumpBy)
         }
-
 
         updateMusicData()   // updates metadata to be used by other functions
 

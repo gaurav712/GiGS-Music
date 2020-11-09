@@ -111,6 +111,8 @@ class LoadingActivity : AppCompatActivity() {
                 Log.i("file", file.name.toString())
 //                Thread {
                 try {
+                    // Just in case if the music has no title
+                    MediaInfo.DEFAULT_TITLE = file.name.toString()
                     val (title, artist, duration) = mediaInfo.getMetadata(this, file.uri)
                     defaultPlaylist += (arrayListOf(
                         title, artist, duration.toString(),
