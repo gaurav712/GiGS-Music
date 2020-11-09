@@ -22,7 +22,7 @@
         android:id="@+id/loadingImageView"
         android:layout_width="96dp"
         android:layout_height="96dp"
-        app:srcCompat="@drawable/launcher_icon"
+        app:srcCompat="@drawable/default_album_art"
         android:layout_marginTop="150dp"
         android:elevation="20dp"
         app:layout_constraintStart_toStartOf="parent"

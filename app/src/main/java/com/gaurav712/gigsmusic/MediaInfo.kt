@@ -85,7 +85,7 @@ class MediaInfo {
             BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
         } catch (ex: Exception) {
             // load the app icon as the default album art
-            BitmapFactory.decodeResource(context.resources, R.drawable.launcher_icon)
+            BitmapFactory.decodeResource(context.resources, R.drawable.default_album_art)
         }
     }
 
