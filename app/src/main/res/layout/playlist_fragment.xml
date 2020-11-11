@@ -3,22 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/playlist_fragment_shape"
     tools:context=".PlaylistFragment"
     android:orientation="vertical"
-    android:paddingTop="16dp"
-    android:paddingStart="30dp"
-    android:paddingEnd="30dp"
-    android:paddingBottom="16dp">
+    android:paddingStart="24dp"
+    android:paddingEnd="24dp"
+    android:paddingBottom="8dp">
 
-    <Spinner
-        android:id="@+id/playlistSelectionSpinner"
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:background="@null"/>
+        android:layout_marginBottom="32dp"
+        android:src="@drawable/drag_handle"
+        android:contentDescription="@string/drag_handle_description"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/playlistRecyclerView"

@@ -37,7 +37,7 @@ class MusicPlayerService: Service() {
         playerNotification = NotificationCompat.Builder(context, CHANNEL_ID)
         playerNotification.setContentTitle(title).
         setContentIntent(pendingIntent).
-        setSmallIcon(R.drawable.ic_launcher_icon).
+        setSmallIcon(R.drawable.launcher_icon).
         setContentText("Lorem ipsum dolor").
         priority = NotificationCompat.PRIORITY_DEFAULT
 

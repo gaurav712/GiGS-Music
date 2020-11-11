@@ -3,6 +3,8 @@ package com.gaurav712.gigsmusic
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.view.DragEvent.*
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,8 +27,7 @@ class PlaylistFragment : Fragment() {
     ): View? {
 
         val rootFragment = inflater.inflate(R.layout.playlist_fragment, container, false)
-        val data = arrayListOf("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q")
-        val recyclerViewAdapter = activity?.let { PlaylistRecyclerViewAdapter(it, data) }
+        val recyclerViewAdapter = activity?.let { PlaylistRecyclerViewAdapter(it) }
 //        recyclerView = activity?.findViewById(R.id.playlistRecyclerView)!!
         val recyclerView: RecyclerView = rootFragment.findViewById(R.id.playlistRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(activity)

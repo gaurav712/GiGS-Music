@@ -89,6 +89,19 @@ class MediaInfo {
         }
     }
 
+    fun getPlaylistThumbnail(context: Context, mediaPath: Uri): Bitmap {
+
+        mediaMetadata = MediaMetadataRetriever()
+        mediaMetadata.setDataSource(context, mediaPath)
+
+        var bitmap = getBitmap(context)
+        bitmap = Bitmap.createScaledBitmap(bitmap, width, height, false)
+
+        release()
+
+        return bitmap
+    }
+
     fun release() {
         mediaMetadata.release()
     }
@@ -96,5 +109,9 @@ class MediaInfo {
     companion object {
         lateinit var DEFAULT_TITLE: String
         private const val DEFAULT_ARTIST = "Unknown"
+
+        // default size for thumbnails
+        const val height = 200
+        const val width = 200
     }
 }

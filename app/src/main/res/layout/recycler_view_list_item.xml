@@ -1,12 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="80dp">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="20dp"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/playlistThumbnailImageView"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginEnd="30dp"
+        android:src="@drawable/play"
+        android:contentDescription="@string/playlist_thumbnail_description"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/recyclerViewTitleTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/recyclerViewTitleTextView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/loading_text"/>
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/default_title"
+        android:layout_marginBottom="8dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewArtistTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/playlistThumbnailImageView"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/recyclerViewArtistTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/default_artist"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/recyclerViewTitleTextView"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewTitleTextView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

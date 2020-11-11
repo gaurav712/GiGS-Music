@@ -90,8 +90,8 @@
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:marqueeRepeatLimit="marquee_forever"
-            android:padding="5dp"
             android:scrollHorizontally="true"
+            android:padding="5dp"
             android:singleLine="true"
             android:text="@string/default_title"
             android:textAlignment="center"
@@ -200,6 +200,7 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/playlistViewFragment"
         app:behavior_peekHeight="56dp"
+        android:background="@drawable/playlist_fragment_shape"
         app:behavior_skipCollapsed="true"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
         android:layout_height="match_parent"
