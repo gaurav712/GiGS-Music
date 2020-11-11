@@ -127,6 +127,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:background="@drawable/add_to_playlist"
+            android:layout_marginStart="16dp"
             app:layout_constraintBottom_toTopOf="@id/repeatButton"
             app:layout_constraintEnd_toStartOf="@+id/musicTitleTextBox"
             app:layout_constraintStart_toStartOf="parent"
@@ -138,6 +139,7 @@
             android:background="@drawable/favorite_false"
             android:onClick="toggleFavorite"
             android:tag="@string/favorite_false"
+            android:layout_marginEnd="16dp"
             app:layout_constraintBottom_toTopOf="@id/shuffleButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/musicTitleTextBox"
@@ -196,12 +198,14 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.fragment.app.FragmentContainerView
-        app:behavior_peekHeight="48dp"
+        android:id="@+id/playlistViewFragment"
+        app:behavior_peekHeight="56dp"
         app:behavior_skipCollapsed="true"
-        android:id="@+id/filter_fragment"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
+        android:clickable="true"
+        android:focusable="true"
         android:name="com.gaurav712.gigsmusic.PlaylistFragment" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
