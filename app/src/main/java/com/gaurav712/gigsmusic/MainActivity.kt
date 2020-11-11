@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONArray
 import java.lang.Integer.parseInt
 import java.util.*
+import kotlin.math.abs
 import kotlin.random.Random.Default.nextInt
 
 class MainActivity : AppCompatActivity() {
@@ -159,8 +160,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadAlbumArt() {
+//        val animation = AnimationUtils.loadAnimation(this, R.anim.bounce_album_art)
+//        animation.interpolator = bounceAnimationInterpolator
         runOnUiThread {
             albumArtImage.setImageBitmap(currentMusicAlbumArt)
+//            albumArtImage.animation = animation
         }
     }
 
@@ -418,6 +422,10 @@ class MainActivity : AppCompatActivity() {
 
     fun preferencesMenu(settingsLaunchButton: View) {
         settingsLaunchButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.rotate))
+    }
+
+    fun onItemClicked(index: Int) {
+        changeMusic(abs(index - currentMusicIndex))
     }
 
     companion object {

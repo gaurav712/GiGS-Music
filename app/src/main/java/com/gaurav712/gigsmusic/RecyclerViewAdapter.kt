@@ -28,6 +28,11 @@ class PlaylistRecyclerViewAdapter(private val context: Context) :
     }
 
     override fun onBindViewHolder(holder: PlaylistRecyclerViewHolder, position: Int) {
+
+        holder.itemView.setOnClickListener {
+            (holder.itemView.context as MainActivity).onItemClicked(position)
+        }
+
         holder.recyclerViewTitleTextView.text = MainActivity.defaultPlaylist[position][titleIndex].toString()
         holder.recyclerViewArtistTextView.text = MainActivity.defaultPlaylist[position][artistIndex].toString()
         CoroutineScope(IO).launch {

@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:elevation="20dp"
-    android:padding="8dp">
+    android:padding="5dp">
 
     <ImageView
         android:id="@+id/playlistThumbnailImageView"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginEnd="24dp"
         android:src="@drawable/play"
         android:contentDescription="@string/playlist_thumbnail_description"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:text="@string/default_title"
         android:layout_marginBottom="8dp"
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/recyclerViewArtistTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/playlistThumbnailImageView"
@@ -35,6 +35,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/default_artist"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/recyclerViewTitleTextView"
