@@ -10,7 +10,6 @@ This is my first android project. So, you should never expect it to be "The Perf
 To be added:
 
 * Add to Playlist feature
-* The Playlist View
 * Preferences View
 * An Equalizer (maybe)
 * Visualisation (TBD)
