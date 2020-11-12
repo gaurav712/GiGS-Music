@@ -1,5 +1,6 @@
 package com.gaurav712.gigsmusic
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Color.parseColor
@@ -425,7 +426,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onItemClicked(index: Int) {
-        changeMusic(abs(index - currentMusicIndex))
+        changeMusic(index - currentMusicIndex)
     }
 
     companion object {
@@ -433,7 +434,7 @@ class MainActivity : AppCompatActivity() {
         lateinit var defaultPlaylist: Array<JSONArray>
         private var currentMusicIndex: Int = 0
         private lateinit var currentMusicUri: Uri
-        private lateinit var currentMusicTitle: String
+        lateinit var currentMusicTitle: String
         private lateinit var currentMusicArtist: String
         private var currentMusicDuration: Int = 0
         private lateinit var currentMusicAlbumArt: Bitmap
