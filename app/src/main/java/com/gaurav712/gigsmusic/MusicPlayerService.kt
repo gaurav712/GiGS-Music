@@ -1,13 +1,13 @@
 package com.gaurav712.gigsmusic
 
-import android.app.PendingIntent
-import android.app.Service
+import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.media.AudioAttributes
 import android.media.AudioAttributes.CONTENT_TYPE_MUSIC
 import android.media.MediaPlayer
 import android.net.Uri
+import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 
@@ -19,33 +19,30 @@ class MusicPlayerService: Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-//        playerNotification = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
-//        playerNotification.setContentTitle("Nothing").
-//        setSmallIcon(R.drawable.ic_launcher_icon).
-//        setContentText("Lorem ipsum dolor").
-//        priority = NotificationCompat.PRIORITY_DEFAULT
-
-//        startForeground(NOTIFICATION_REQUEST_CODE, playerNotification.build())
-
-        return START_STICKY
-    }
-
-    fun startNotification(context: Context, intent: Intent, title: String) {
-
-        val pendingIntent = PendingIntent.getActivity(context, 0,
-                intent, PendingIntent.FLAG_UPDATE_CURRENT)
-        playerNotification = NotificationCompat.Builder(context, CHANNEL_ID)
-        playerNotification.setContentTitle(title).
-        setContentIntent(pendingIntent).
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationChannel = NotificationChannel(
+                CHANNEL_ID,
+                "my_notification",
+                NotificationManager.IMPORTANCE_LOW
+            )
+            notificationChannel.enableLights(false)
+            notificationChannel.enableVibration(false)
+            notificationChannel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+            (applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager)
+                .createNotificationChannel(notificationChannel)
+        }
+        playerNotification = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
+        playerNotification.setContentTitle("Nothing").
         setSmallIcon(R.drawable.launcher_icon).
         setContentText("Lorem ipsum dolor").
         priority = NotificationCompat.PRIORITY_DEFAULT
 
-//        startForeground(NOTIFICATION_REQUEST_CODE, playerNotification.build())
-        context.startService(intent)
+        startForeground(2, playerNotification.build())
+        return START_STICKY
     }
 
-    fun stopNotification() {
+    override fun onDestroy() {
+        super.onDestroy()
         stopForeground(true)
         stopSelf()
     }
@@ -66,6 +63,10 @@ class MusicPlayerService: Service() {
         if (mediaPlayer.isPlaying)
             mediaPlayer.stop()
         mediaPlayer.release()
+
+        // Stop the service
+        stopForeground(true)
+        stopSelf()
     }
 
     fun reset() {
@@ -99,6 +100,5 @@ class MusicPlayerService: Service() {
         lateinit var playerNotification: NotificationCompat.Builder
 
         const val CHANNEL_ID = "default_channel_id"
-        const val NOTIFICATION_REQUEST_CODE = 712
     }
 }

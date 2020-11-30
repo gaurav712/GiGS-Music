@@ -5,21 +5,19 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Color.parseColor
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.ImageView
-import android.widget.SeekBar
-import android.widget.TextView
+import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.palette.graphics.Palette
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONArray
 import java.lang.Integer.parseInt
 import java.util.*
-import kotlin.math.abs
 import kotlin.random.Random.Default.nextInt
 
 class MainActivity : AppCompatActivity() {
@@ -31,7 +29,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var currentSeekBarProgress: TextView
     private lateinit var maxSeekBarProgress: TextView
     private lateinit var currentMusicNumberTextView: TextView
-    private lateinit var musicPlayerService: MusicPlayerService
     private lateinit var bounceAnimationInterpolator: BounceAnimationInterpolator
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,16 +50,7 @@ class MainActivity : AppCompatActivity() {
         maxSeekBarProgress = findViewById(R.id.maxSeekBarProgress)
         currentMusicNumberTextView = findViewById(R.id.currentMusicNumberTextView)
 
-        if (DEFAULT_PLAYLIST_AVAILABLE) {
-            loadPlayer()
-        }
-    }
-
-    override fun onStop() {
-        // To change the activity enter and exit animation
-        overridePendingTransition(R.anim.activity_expand_and_fade_in,
-            android.R.anim.fade_out)
-        super.onStop()
+        loadPlayer()
     }
 
     override fun onPause() {
@@ -70,20 +58,64 @@ class MainActivity : AppCompatActivity() {
         overridePendingTransition(R.anim.activity_expand_and_fade_in,
             android.R.anim.fade_out)
         super.onPause()
+
+        try {
+            if (musicPlayerService.isPlaying()) {
+                // Start the service if music is playing
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    startForegroundService(
+                        Intent(
+                            applicationContext,
+                            MusicPlayerService::class.java
+                        )
+                    )
+                } else {
+                    startService(Intent(applicationContext, MusicPlayerService::class.java))
+                }
+            }
+        } catch (ex: Exception) {
+            Log.e("MusicPlayerService", ex.message.toString())
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        try {
+            stopService(Intent(applicationContext, MusicPlayerService::class.java))
+
+            // Update the play/pause button
+            if (musicPlayerService.isPlaying()) {
+                val playPauseToggleButton = findViewById<Button>(R.id.playPauseToggleButton)
+                playPauseToggleButton.tag = getString(R.string.playing_text)
+                playPauseToggleButton.setBackgroundResource(R.drawable.pause)
+            }
+        } catch (ex: Exception) {
+            Log.e("MusicPlayerService", ex.message.toString())
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        try {
-            musicPlayerService.release()
-        } catch (ex: Exception) {
-            Log.e("stacktrace", ex.message.toString())
-        }
+//        try {
+//            musicPlayerService.release()
+//        } catch (ex: Exception) {
+//            Log.e("stacktrace", ex.message.toString())
+//        }
+        Toast.makeText(this, "destroyed activity", Toast.LENGTH_SHORT).show()
     }
 
     private fun loadPlayer() {
 
-        changeMusic(0)  // start the initial song, hence 0
+        // Don't start a new instance if there's one, already running
+        try {
+            if (musicPlayerService.isPlaying()) {
+                Log.i("MusicPlayerService", "there\'s an already running instance")
+                updateScreen()
+            }
+        } catch (ex: UninitializedPropertyAccessException) {
+            changeMusic(0)  // start the initial song, hence 0
+        }
 
         // To update the seek-bar with music position
         Timer().scheduleAtFixedRate(object: TimerTask() {
@@ -224,17 +256,10 @@ class MainActivity : AppCompatActivity() {
             musicPlayerService.play()
             pausePlayToggleButton.tag = getString(R.string.playing_text)
             pausePlayToggleButton.setBackgroundResource(R.drawable.pause)
-//            val pendingIntent = PendingIntent.getActivity(applicationContext, 0,
-//                Intent(this, MainActivity::class.java), PendingIntent.FLAG_UPDATE_CURRENT)
-//            val intent = Intent(this, MainActivity::class.java)
-//            MusicPlayerService().startNotification(this@MainActivity, intent, currentMusicTitle)
-//            musicPlayerService.startService(intent)
         } else {
             musicPlayerService.pause()
             pausePlayToggleButton.tag = getString(R.string.paused_text)
             pausePlayToggleButton.setBackgroundResource(R.drawable.play)
-//            musicPlayerService.stopNotification()
-//            MusicPlayerService().stopNotification()
         }
 
         val animation = AnimationUtils.loadAnimation(this, R.anim.bounce)
@@ -244,7 +269,6 @@ class MainActivity : AppCompatActivity() {
 
     fun skipNext(skipNextButton: View) {
 
-//        musicPlayerService.release()    // release the already running instance
         changeMusic(1)  // increase the index by 1
 
         skipNextButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.launch_right))
@@ -252,7 +276,6 @@ class MainActivity : AppCompatActivity() {
 
     fun skipPrevious(skipPreviousButton: View) {
 
-//        musicPlayerService.release()    // release the already running instance
         changeMusic(-1)  // decrease the index by 1
 
         skipPreviousButton.startAnimation(AnimationUtils.loadAnimation(this,R.anim.launch_left))
@@ -303,6 +326,11 @@ class MainActivity : AppCompatActivity() {
         if (playPauseToggleButton.tag == getString(R.string.playing_text)) {
             musicPlayerService.play()
         }
+
+        updateScreen()
+    }
+
+    private fun updateScreen() {
 
         updateCurrentMusicNumberText()  // to refresh the current song number
 
@@ -430,11 +458,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
+
+        private lateinit var musicPlayerService: MusicPlayerService
+
         private var dominantColor: Int = 0
         lateinit var defaultPlaylist: Array<JSONArray>
         private var currentMusicIndex: Int = 0
         private lateinit var currentMusicUri: Uri
-        lateinit var currentMusicTitle: String
+        private lateinit var currentMusicTitle: String
         private lateinit var currentMusicArtist: String
         private var currentMusicDuration: Int = 0
         private lateinit var currentMusicAlbumArt: Bitmap

@@ -163,10 +163,6 @@ class LoadingActivity : AppCompatActivity() {
 //        }
     }
 
-    private fun destroyActivity() {
-        finish()
-    }
-
     companion object {
         const val OPEN_DOCUMENT_TREE_REQ_CODE: Int = 42 // just a random number
     }
