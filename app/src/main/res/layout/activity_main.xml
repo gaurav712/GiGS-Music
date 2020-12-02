@@ -23,7 +23,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
         <Button
-            android:id="@+id/menuButton"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginTop="16dp"
@@ -198,7 +197,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/playlistViewFragment"
+        android:id="@+id/playlistRecyclerView"
         app:behavior_peekHeight="56dp"
         android:background="@drawable/playlist_fragment_shape"
         app:behavior_skipCollapsed="true"

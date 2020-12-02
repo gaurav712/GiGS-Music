@@ -13,6 +13,8 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentContainerView
 import androidx.palette.graphics.Palette
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONArray
@@ -465,10 +467,10 @@ class MainActivity : AppCompatActivity() {
         lateinit var defaultPlaylist: Array<JSONArray>
         private var currentMusicIndex: Int = 0
         private lateinit var currentMusicUri: Uri
-        private lateinit var currentMusicTitle: String
-        private lateinit var currentMusicArtist: String
+        lateinit var currentMusicTitle: String
+        lateinit var currentMusicArtist: String
         private var currentMusicDuration: Int = 0
-        private lateinit var currentMusicAlbumArt: Bitmap
+        lateinit var currentMusicAlbumArt: Bitmap
 
         // shuffle and repeat
         private var SHUFFLE = false

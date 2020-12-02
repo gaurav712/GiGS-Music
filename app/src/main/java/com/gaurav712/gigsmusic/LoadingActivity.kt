@@ -1,6 +1,5 @@
 package com.gaurav712.gigsmusic
 
-import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -43,7 +42,7 @@ class LoadingActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == OPEN_DOCUMENT_TREE_REQ_CODE && resultCode == Activity.RESULT_OK) {
+        if(requestCode == OPEN_DOCUMENT_TREE_REQ_CODE && resultCode == RESULT_OK) {
 
             val treeUri = data?.data    // get data
 
