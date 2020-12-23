@@ -32,7 +32,17 @@
         </activity>
         <service android:name=".MusicPlayerService"
             android:foregroundServiceType="mediaPlayback"
-            android:enabled="true"/>
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_BUTTON"/>
+            </intent-filter>
+        </service>
+        <receiver android:name=".MusicPlayerService$MusicControlsReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_BUTTON"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
