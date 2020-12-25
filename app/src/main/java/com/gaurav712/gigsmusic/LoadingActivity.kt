@@ -107,7 +107,6 @@ class LoadingActivity : AppCompatActivity() {
         for (file in files) {
 
             if (file.isFile && file.type == getString(R.string.mp3_mime_type)) {
-                Log.i("file", file.name.toString())
 //                Thread {
                 try {
                     // Just in case if the music has no title
@@ -151,15 +150,11 @@ class LoadingActivity : AppCompatActivity() {
                 getString(R.string.default_playlist_name), defaultPlaylist
             )
         }
+    }
 
-//        while (true) {
-//
-//            sleep(50)   // wait for defaultPlaylist to be initialised
-//
-//            if (defaultPlaylistIsInitialized) {
-
-//            }
-//        }
+    override fun onDestroy() {
+        super.onDestroy()
+        this.finish()
     }
 
     companion object {

@@ -16,6 +16,9 @@ To be added:
 * Navigation gestures
 * Anything else I decide later...
 
+# NOTICE
+**Abandoned!! It was a fun experience but the code eventually grew up to be unmaintainable. At least for me, being a novice in the field.**
+
 # LICENSE
 Licensed under MIT License
 

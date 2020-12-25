@@ -13,8 +13,6 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentContainerView
 import androidx.palette.graphics.Palette
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONArray
@@ -35,10 +33,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        // To change the activity enter and exit animation
-        overridePendingTransition(R.anim.activity_expand_and_fade_in,
-            android.R.anim.fade_out)
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -56,9 +50,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onPause() {
-        // To change the activity enter and exit animation
-        overridePendingTransition(R.anim.activity_expand_and_fade_in,
-            android.R.anim.fade_out)
         super.onPause()
 
         try {
@@ -85,27 +76,21 @@ class MainActivity : AppCompatActivity() {
 
         try {
             stopService(Intent(applicationContext, MusicPlayerService::class.java))
-
-            // Update the play/pause button
-            if (musicPlayerService.isPlaying()) {
-                val playPauseToggleButton = findViewById<Button>(R.id.playPauseToggleButton)
-                playPauseToggleButton.tag = getString(R.string.playing_text)
-                playPauseToggleButton.setBackgroundResource(R.drawable.pause)
-            }
         } catch (ex: Exception) {
-            Log.e("MusicPlayerService", ex.message.toString())
+            Log.e("removeNotification", ex.message.toString())
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-//        try {
-//            musicPlayerService.release()
-//        } catch (ex: Exception) {
-//            Log.e("stacktrace", ex.message.toString())
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        if (!musicPlayerService.isPlaying()) {
+//            try {
+//                stopService(Intent(applicationContext, MusicPlayerService::class.java))
+//            } catch (ex: Exception) {
+//                Log.e("musicServiceRelease", ex.message.toString())
+//            }
 //        }
-        Toast.makeText(this, "destroyed activity", Toast.LENGTH_SHORT).show()
-    }
+//    }
 
     private fun loadPlayer() {
 
@@ -128,7 +113,7 @@ class MainActivity : AppCompatActivity() {
                         updateSeekBar(currentPosition)
                     }
                 } catch (ex: Exception) {
-                    Log.e("stacktrace", ex.message.toString())
+                    return
                 }
             }
         }, 0, 1000)
@@ -334,6 +319,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateScreen() {
 
+        updatePlayPauseToggle() // update play/pause toggle button
+
         updateCurrentMusicNumberText()  // to refresh the current song number
 
         loadMusicMetadata() // updates music title, artist and duration
@@ -409,6 +396,15 @@ class MainActivity : AppCompatActivity() {
                 // current music is not in favorites and the button is enabled
                 animateFavoriteToggle()
             }
+        }
+    }
+
+    private fun updatePlayPauseToggle() {
+        // Update the play/pause button
+        if (musicPlayerService.isPlaying()) {
+            val playPauseToggleButton = findViewById<Button>(R.id.playPauseToggleButton)
+            playPauseToggleButton.tag = getString(R.string.playing_text)
+            playPauseToggleButton.setBackgroundResource(R.drawable.pause)
         }
     }
 
